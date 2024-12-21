@@ -12,7 +12,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        $todos = Todo::all();
+        $todos = Todo::orderBy('isCompleted', 'asc')->orderBy('created_at', 'desc')->get();
         return response()->json($todos);
     }
 
@@ -32,6 +32,7 @@ class TodoController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
+            'isCompleted' => 'required|boolean',
         ]);
         $todo = Todo::create($validated);
         return response()->json($todo, 201);
