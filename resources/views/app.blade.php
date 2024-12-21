@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial--scale=1">
-    <title>Swap's blog</title>
+    <title>Todo app</title>
     @vite('resources/js/app.js')
     @inertiaHead
 </head>
