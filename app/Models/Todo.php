@@ -11,5 +11,5 @@ class Todo extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['title', 'content', 'isCompleted'];
+    protected $fillable = ['title', 'description', 'isCompleted'];
 }

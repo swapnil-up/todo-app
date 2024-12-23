@@ -33,6 +33,7 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import addTodo from '../components/addTodo.vue'
+import Pusher from 'pusher-js'
 
 const todos = ref([])
 const editTodo = ref(null)
@@ -46,8 +47,19 @@ const fetchTodos = async () => {
     }
 }
 
+
+    const pusher = new Pusher('29efa0557c4d14bd2ecb', {
+        cluster: 'ap2',
+    })
+
 onMounted(() => {
     fetchTodos()
+
+    const channel = pusher.subscribe('todos')
+    channel.bind('todo.completed', (data) => {
+        alert(`Todo "${data.todo.title}" was completed!`)
+        console.log('Real-Time Update:', data.todo)
+    })
 })
 
 function toggleComplete(todo) {

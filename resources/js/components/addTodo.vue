@@ -15,6 +15,7 @@ const submitTodo = async () => {
             description: description.value,
             isCompleted: isCompleted.value,
         })
+        console.log(response.data)
         emit('todo-created', response.data)
 
         title.value = ''
@@ -27,12 +28,16 @@ const submitTodo = async () => {
 </script>
 
 <template>
-    <form @submit.prevent="submitTodo">
+    <form @submit.prevent="submitTodo" class="flex flex-col gap-1">
         <h2>Add new todo</h2>
-        <label>Title</label>
-        <input v-model="title" required />
-        <label>Description</label>
-        <input v-model="description" />
+        <div>
+            <label>Title</label>
+            <input v-model="title" required class="border border-gray-400"/>
+        </div>
+        <div >
+            <label>Description</label>
+            <input v-model="description" required class="border border-gray-400"/>
+        </div>
         <div class="flex gap-2">
             <input v-model="isCompleted" type="checkbox" />
             <label>Completed?</label>
