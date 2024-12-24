@@ -47,8 +47,13 @@ const fetchTodos = async () => {
     }
 }
 
+Pusher.logToConsole = true;
 
     const pusher = new Pusher('29efa0557c4d14bd2ecb', {
+        wsHost: '127.0.0.1',
+        wsPort: 8080,
+        forceTLS: false,
+        enabledTransports: ['ws', 'wss'],
         cluster: 'ap2',
     })
 
@@ -57,6 +62,7 @@ onMounted(() => {
 
     const channel = pusher.subscribe('todos')
     channel.bind('todo.completed', (data) => {
+        console.log("triggered")
         alert(`Todo "${data.todo.title}" was completed!`)
         console.log('Real-Time Update:', data.todo)
     })

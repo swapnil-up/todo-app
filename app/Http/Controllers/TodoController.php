@@ -76,9 +76,10 @@ class TodoController extends Controller
 
             $todo->update($validated);
 
-            if (!$wasCompleted && $todo->isCompleted) {
-                broadcast(new TodoCompleted($todo));
-            }
+            // if (!$wasCompleted && $todo->isCompleted) {
+            //     broadcast(new TodoCompleted($todo));
+            // }
+            event(new TodoCompleted($todo));
 
             return response()->json($todo);
         }catch (\Exception $e) {
