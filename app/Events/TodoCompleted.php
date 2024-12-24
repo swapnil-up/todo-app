@@ -6,14 +6,16 @@ use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
+use Illuminate\Broadcasting\InteractsWithBroadcasting;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class TodoCompleted implements ShouldBroadcast
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, InteractsWithSockets, InteractsWithBroadcasting, SerializesModels;
 
     public $todo;
 
@@ -23,6 +25,8 @@ class TodoCompleted implements ShouldBroadcast
     public function __construct($todo)
     {
         $this->todo = $todo;
+        Log::info('TodoCompleted event created for Todo:', $this->todo->toArray());
+        $this->broadcastVia('pusher');
     }
 
     /**
@@ -39,6 +43,7 @@ class TodoCompleted implements ShouldBroadcast
 
     public function broadcastAs()
     {
+        Log::info('Broadcasting TodoCompleted event for Todo ID: ' . $this->todo->id);
         return 'todo.completed';
     }
 }

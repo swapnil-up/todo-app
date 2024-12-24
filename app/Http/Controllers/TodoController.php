@@ -79,9 +79,11 @@ class TodoController extends Controller
             // if (!$wasCompleted && $todo->isCompleted) {
             //     broadcast(new TodoCompleted($todo));
             // }
+            Log::info('Broadcasting TodoCompleted event for Todo 1:', $todo->toArray());
             event(new TodoCompleted($todo));
-
+            
             return response()->json($todo);
+
         }catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['error' => $e->getMessage()], 500);
